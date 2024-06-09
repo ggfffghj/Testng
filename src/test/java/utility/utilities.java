@@ -18,7 +18,6 @@ public class utilities {
     public String testdata1() throws IOException {
 
         FileInputStream file = new FileInputStream("C:\\excel\\Book1.xlsx");
-
         String userid = WorkbookFactory.create(file).getSheet("Sheet1").getRow(0).getCell(1).getStringCellValue();
         return userid;
     }

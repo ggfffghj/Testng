@@ -3,17 +3,31 @@ package base;
 import POM.signinPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import utility.utilities;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class launchBrowser {
-    protected static WebDriver driver = new ChromeDriver();
-    protected static signinPage loginpage = new signinPage(driver);
-    protected static utilities util = new utilities();
+    protected WebDriver driver;
+    protected  signinPage loginpage;
+    protected  utilities util;
 
-    public static void home_page(){
+    @Parameters({"browser","url"})
+    @BeforeMethod
+    public void home_page(String browser, String url){
 
-        driver.get("https://www.facebook.com/login.php");
+        if (browser.equalsIgnoreCase("chrome")) {
+           // WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+        } else if (browser.equalsIgnoreCase("firefox")) {
+            //WebDriverManager.firefoxdriver().setup();
+            driver = new FirefoxDriver();
+        }
+        driver.get(url);
         driver.manage().window().maximize();
+         loginpage = new signinPage(driver);
+        util = new utilities();
+
     }
 }
